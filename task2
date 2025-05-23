@@ -1,4 +1,4 @@
-[media pointer="file-service://file-1bqanK86Qde6ZNjkhy4Lhm"]
+
 #include <iostream>
 #include <math.h> // Для sqrt
 using namespace std;
