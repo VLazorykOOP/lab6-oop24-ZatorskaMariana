@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Базовий клас: Особа
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    // Конструктор
+    Person(string n, int a) : name(n), age(a) {}
+
+    // Функція виведення інформації
+    virtual void display() const {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+
+    // Віртуальний деструктор
+    virtual ~Person() {}
+};
+
+// Клас Жінка з віртуальним наслідуванням
+class Woman : virtual public Person {
+protected:
+    string maidenName; // Дівоче прізвище
+
+public:
+    Woman(string n, int a, string maiden) : Person(n, a), maidenName(maiden) {}
+
+    void display() const override {
+        Person::display();
+        cout << "Maiden Name: " << maidenName << endl;
+    }
+};
+
+// Клас Працівник з віртуальним наслідуванням
+class Employee : virtual public Person {
+protected:
+    string position; // Посада працівника
+
+public:
+    Employee(string n, int a, string pos) : Person(n, a), position(pos) {}
+
+    void display() const override {
+        Person::display();
+        cout << "Position: " << position << endl;
+    }
+};
+
+// Клас Працівник-жінка
+class WomanEmployee : public Woman, public Employee {
+public:
+    // Конструктор
+    WomanEmployee(string n, int a, string maiden, string pos)
+        : Person(n, a), Woman(n, a, maiden), Employee(n, a, pos) {}
+
+    // Перевизначення функції виведення
+    void display() const override {
+        Person::display();
+        cout << "Maiden Name: " << maidenName << endl;
+        cout << "Position: " << position << endl;
+    }
+};
+
+// Головна функція
+int main() {
+    Person person("John Doe", 40);
+    Woman woman("Anna Smith", 30, "Brown");
+    Employee employee("Mark Johnson", 35, "Engineer");
+    WomanEmployee womanEmployee("Emma Davis", 28, "Clark", "Manager");
+
+    cout << "Person:" << endl;
+    person.display();
+    cout << endl;
+
+    cout << "Woman:" << endl;
+    woman.display();
+    cout << endl;
+
+    cout << "Employee:" << endl;
+    employee.display();
+    cout << endl;
+
+    cout << "WomanEmployee:" << endl;
+    womanEmployee.display();
+    cout << endl;
+
+    return 0;
+}
