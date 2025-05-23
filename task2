@@ -1,0 +1,94 @@
+[media pointer="file-service://file-1bqanK86Qde6ZNjkhy4Lhm"]
+#include <iostream>
+#include <math.h> // Для sqrt
+using namespace std;
+
+// Абстрактний базовий клас
+class Figure {
+public:
+    // Чисто віртуальна функція для обчислення периметру
+    virtual double perimeter() const = 0;
+
+    // Віртуальний деструктор
+    virtual ~Figure() {}
+};
+
+// Клас прямокутник
+class Rectangle : public Figure {
+private:
+    double width, height; // ширина і висота прямокутника
+
+public:
+    // Конструктор
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    // Перевизначення функції обчислення периметру
+    double perimeter() const override {
+        return 2 * (width + height);
+    }
+};
+
+// Клас коло
+class Circle : public Figure {
+private:
+    double radius; // радіус кола
+    const double pi = 3.14159265358979323846; // локальна константа pi
+
+public:
+    // Конструктор
+    Circle(double r) : radius(r) {}
+
+    // Перевизначення функції обчислення периметру
+    double perimeter() const override {
+        return 2 * pi * radius; // Формула 2?r
+    }
+};
+
+// Клас прямокутний трикутник
+class RightTriangle : public Figure {
+private:
+    double a, b; // катети трикутника
+
+public:
+    // Конструктор
+    RightTriangle(double sideA, double sideB) : a(sideA), b(sideB) {}
+
+    // Перевизначення функції обчислення периметру
+    double perimeter() const override {
+        double hypotenuse = sqrt(a * a + b * b); // Обчислення гіпотенузи за теоремою Піфагора
+        return a + b + hypotenuse;
+    }
+};
+
+// Клас трапеція
+class Trapezoid : public Figure {
+private:
+    double base1, base2, side1, side2; // основи та бокові сторони трапеції
+
+public:
+    // Конструктор
+    Trapezoid(double b1, double b2, double s1, double s2)
+        : base1(b1), base2(b2), side1(s1), side2(s2) {}
+
+    // Перевизначення функції обчислення периметру
+    double perimeter() const override {
+        return base1 + base2 + side1 + side2;
+    }
+};
+
+// Головна функція
+int main() {
+    // Створення об'єктів фігур
+    Rectangle rect(5.0, 10.0);
+    Circle circ(3.0);
+    RightTriangle tri(3.0, 4.0);
+    Trapezoid trap(6.0, 4.0, 3.0, 5.0);
+
+    // Виведення периметрів фігур
+    cout << "Perimeter of Rectangle: " << rect.perimeter() << endl;
+    cout << "Perimeter of Circle: " << circ.perimeter() << endl;
+    cout << "Perimeter of Right Triangle: " << tri.perimeter() << endl;
+    cout << "Perimeter of Trapezoid: " << trap.perimeter() << endl;
+
+    return 0;
+}
